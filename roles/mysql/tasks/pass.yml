@@ -1,0 +1,7 @@
+- name: Mysql | Create a new pass for user
+  command: openssl rand -base64 8
+  register: mysql_user_pass
+
+- name: Mysql | Display new pass in playbook output
+  debug:
+      msg: "New user pass: {{mysql_user_pass.stdout}}"

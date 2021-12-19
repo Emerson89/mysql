@@ -1,0 +1,12 @@
+
+- name: Create a new database mysql
+  mysql_db:
+    name: "{{ item.name | default('db01') }}"
+    collation: "{{ item.collation | default('utf8_bin') }}"
+    encoding: "{{ item.encoding | default('utf8') }}"
+    state: "{{ item.state | default('present') }}"
+    login_host: "{{ item.login_host | default('localhost')}}"
+    login_user: "{{ item.login_user | default('root')}}"
+    login_password: "{{ item.login_password | default('')}}"
+  with_items: "{{ mysql_databases }}"
+  no_log: true

@@ -1,0 +1,14 @@
+- name: Create MySQL user
+  mysql_user:
+    login_host: "{{ item.login_host | default('localhost')}}"
+    login_user: "{{ item.login_user | default('root')}}"
+    login_password: "{{ item.login_password | default('')}}"
+    name: "{{ item.name | default('user01') }}"
+    host: "{{ item.host | default('localhost') }}"
+    password: "{{ item.password | default('mysql_user_pass.stdout')}}"
+    priv: "{{ item.priv | default('*.*:USAGE') }}"
+    state: "{{ item.state | default('present') }}"
+    append_privs: "{{ item.append_privs | default('no') }}"
+    encrypted: "{{ item.encrypted | default('no') }}"
+  with_items: "{{ mysql_users }}"
+  no_log: true

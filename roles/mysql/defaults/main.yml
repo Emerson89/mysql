@@ -1,0 +1,21 @@
+database_name: db01
+database_user: user01
+database_address: localhost
+server_remote: localhost
+mysql_root_username: root
+mysql_root_pass: Tg0z64OVddNzFwNA==
+user_privileges: localhost
+mysql_user_pass.stdout:
+
+# Databases.
+mysql_databases: []
+#   - name: example
+#     collation: utf8_general_ci
+#     encoding: utf8
+#     replicate: 1
+# Users.
+mysql_users: []
+#   - name: example
+#     host: 127.0.0.1
+#     password: secret
+#     priv: *.*:USAGE

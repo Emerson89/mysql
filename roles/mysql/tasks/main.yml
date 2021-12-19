@@ -1,0 +1,14 @@
+- include_tasks: RedHat.yml
+  when: ansible_distribution_file_variety == 'RedHat'
+
+- include_tasks: Debian.yml
+  when: ansible_distribution_file_variety == 'Debian'
+
+- name: "Create user pass"
+  include: pass.yml
+
+- name: "Create mysql user"
+  include: Users.yml
+
+- name: "Create database mysql"
+  include: Database.yml

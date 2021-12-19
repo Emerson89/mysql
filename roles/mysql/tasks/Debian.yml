@@ -1,0 +1,52 @@
+- name: Only run update
+  apt:
+    update_cache: yes
+    
+- name: Install packages dependencies
+  apt:
+    name:
+        - net-tools
+        - vim
+        - wget
+        - python3
+        - python3-pip
+    state: present
+
+- name: Install mariadb-server
+  apt:
+    name: 
+        - mariadb-server
+
+- name: Make sure mariadb service is running
+  systemd:
+    name: mariadb
+    state: started
+    enabled: yes  
+
+- name: Install pip packages
+  pip:
+    name:
+        - pymysql
+    executable: pip3
+
+- name: MariaDB | Publish file .my.cnf in the root home
+  template:
+      src: user.root.my.cnf.j2
+      dest: /root/.my.cnf
+      owner: root
+      mode: 0600
+      force: no
+
+- name: Set Mysql root Password
+  mysql_user:
+    name: "{{ item.name }}"
+    host: "{{ item.host | default('localhost') }}"
+    password: "{{ item.password }}"
+    login_unix_socket: "{{ item.login_unix_socket | default('/var/run/mysqld/mysqld.sock') }}" 
+    priv: "{{ item.priv | default('priv: *.*:USAGE') }}"
+    state: "{{ item.state | default('present') }}"
+    append_privs: "{{ item.append_privs | default('no') }}"
+    encrypted: "{{ item.encrypted | default('no') }}"
+  with_items: "{{ mysql_root_users }}"
+  no_log: true
+  ignore_errors: true

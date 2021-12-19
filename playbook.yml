@@ -1,0 +1,6 @@
+---
+- name: Install Database
+  hosts: all
+  become: true
+  roles:
+    - mysql
