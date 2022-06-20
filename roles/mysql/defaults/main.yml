@@ -5,7 +5,7 @@ server_remote: localhost
 mysql_root_username: root
 mysql_root_pass: Tg0z64OVddNzFwNA==
 user_privileges: localhost
-mysql_user_pass.stdout:
+mysql_user_pass: yQE9ob2yqR4=
 
 # Databases.
 mysql_databases: []

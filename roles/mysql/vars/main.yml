@@ -5,3 +5,14 @@ mysql_root_users:
     password: "{{ mysql_root_pass }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
     priv: "*.*:ALL,GRANT"
+mysql_databases:
+  - name: "{{ database_name }}"
+    login_password: "{{ mysql_root_pass }}"
+    encoding: utf8
+    collation: utf8_bin
+mysql_users:
+  - login_password: "{{ mysql_root_pass }}"
+    name: "{{ database_user }}"
+    host: "{{ server_remote }}"
+    password: "{{ mysql_user_pass }}"
+    priv: "{{ database_name }}.*:ALL"
