@@ -27,6 +27,7 @@ Mysql database installation using ansible
 
 ## Exemplo de variáveis em /vars
 
+```
 mysql_databases:
   - name: "{{ database_name }}"
     login_password: "{{ mysql_root_pass }}"
@@ -37,6 +38,7 @@ mysql_users:
     name: "{{ database_user }}"
     password: "{{ mysql_user_pass.stdout }}"
     priv: "{{ database_name }}.*:ALL"
+```
 
 ## Exemplo de playbook para instalação
 ```
