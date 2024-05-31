@@ -5,7 +5,7 @@
     login_password: "{{ item.login_password | default('')}}"
     name: "{{ item.name | default('user01') }}"
     host: "{{ item.host | default('localhost') }}"
-    password: "{{ item.password | default('mysql_user_pass.stdout')}}"
+    password: "{{ item.password | default('yQE9ob2yqR4=')}}"
     priv: "{{ item.priv | default('*.*:USAGE') }}"
     state: "{{ item.state | default('present') }}"
     append_privs: "{{ item.append_privs | default('no') }}"

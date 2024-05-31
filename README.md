@@ -2,61 +2,74 @@
 
 Mysql database installation using ansible
 
-## Dependências
-![Badge](https://img.shields.io/badge/ansible-2.9.10-blue)
+## Requirements
 
-## Suporte SO
+![Badge](https://img.shields.io/badge/ansible-2.16.6-blue)
+
+## Suport SO
 
 - Ubuntu20
 - Debian10
 - Rocky8
 - Centos8
 
-# Como Usar!!!
+## Variables
 
-## Crie o arquivo de inventário hosts 
-
-## Variáveis
-
-| Nome | Descrição | Default | 
+| Name | Description | Default | 
 |------|-----------|---------|
-| database_name | Nome database | db01
-| database_user | Nome user | user01 
-| database_address | IP database | 127.0.0.1
-| user_privileges | privilegios user | 127.0.0.1
-| server_remote | Acesso remoto host | 127.0.0.1
-| mysql_user_pass | Pass user | yQE9ob2yqR4=
+| mysql_databases | Databases | []
+| mysql_users | User databases | [] 
+| mysql_root_username | User root | root
+| mysql_root_pass | Pass root | Tg0z64OVddNzFwNA==
 
-## Exemplo de variáveis em /vars
+*Inside vars.yml:*
 
 ```
+mysql_root_pass: yQE9ob2yqR4
 mysql_databases:
-  - name: "{{ database_name }}"
-    login_password: "{{ mysql_root_pass }}"
+  - name: "db"
     encoding: utf8
     collation: utf8_bin
 mysql_users:
-  - login_password: "{{ mysql_root_pass }}"
-    name: "{{ database_user }}"
-    host: "{{ server_remote }}"
-    password: "{{ mysql_user_pass }}"
-    priv: "{{ database_name }}.*:ALL"
+  - name: "dbuser"
+    host: "%"
+    password: "yQE9ob2yqR4=xxtttrr5"
+    priv: "db.*:ALL"
 ```
 
-## Exemplo de playbook para instalação
+## Example playbook instalation
 ```
 ---
 - name: Install Database
   hosts: all
   become: true
+  vars_files:
+    - vars.yml
   roles:
     - mysql
 ```
-## Exemplo execute o playbook
-``` 
-ansible-playbook -i hosts playbook.yml --extra-vars "database_name=db01 database_user=user01"
-ansible-playbook -i hosts playbook.yml --extra-vars "database_name=db01 database_user=user01 server_remote=IP-REMOTO" <--- Para liberação de acesso remoto
-ansible-playbook -i hosts playbook.yml --extra-vars "database_name=db01 database_name=db02 database_user=user01 database_user=user02" <--- Para criação de mais de um db ou user
+## Example execute the playbook
+
+```bash 
+ansible-playbook -i hosts playbook.yml --extra-vars "@vars.yml"
 ```
+
+## Example inventory
+
+```bash
+[all]
+127.0.0.1 ansible_ssh_private_key_file=PATH/private_key 
+
+[all:vars]
+ansible_user=username
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+```
+
+- Example connect
+
+```bash
+mysql -u dbuser -h 172.16.3.10 -p db
+```
+
 ## Licença
 ![Badge](https://img.shields.io/badge/license-GPLv3-green)

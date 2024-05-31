@@ -5,7 +5,7 @@
   when: ansible_distribution_file_variety == 'Debian'
 
 - name: "Create mysql user"
-  include: Users.yml
+  include_tasks: Users.yml
 
 - name: "Create database mysql"
-  include: Database.yml
+  include_tasks: Database.yml

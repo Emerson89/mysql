@@ -1,2 +1,5 @@
 *.txt
 *.retry
+inventory
+Vagrantfile
+.vagrant
