@@ -2,5 +2,7 @@
 - name: Install Database
   hosts: all
   become: true
+  collections:
+    - community.mysql
   roles:
     - mysql
