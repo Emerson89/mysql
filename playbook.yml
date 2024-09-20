@@ -3,6 +3,6 @@
   hosts: all
   become: true
   collections:
-    - community.mysql
+    - name: community.mysql
   roles:
     - mysql
