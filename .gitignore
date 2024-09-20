@@ -3,3 +3,4 @@
 inventory
 Vagrantfile
 .vagrant
+vars.yml
