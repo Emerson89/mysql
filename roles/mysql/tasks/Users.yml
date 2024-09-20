@@ -1,5 +1,5 @@
 - name: Create MySQL user
-  mysql_user:
+  community.mysql.mysql_user:
     login_host: "{{ item.login_host | default('localhost')}}"
     login_user: "{{ item.login_user | default('root')}}"
     login_password: "{{ item.login_password | default('')}}"
