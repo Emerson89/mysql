@@ -1,11 +1,47 @@
+- name: Capture pass
+  shell: echo "{{ lookup('ansible.builtin.password', 'passwordfile', length=21, chars=['ascii_lowercase', 'ascii_uppercase', 'digits']) }}"
+  register: result_pass
+  when: install_mysql
+
+- name: Set pass
+  set_fact:
+    password: "{{ result_pass.stdout }}"
+  when: install_mysql
+
 - include_tasks: RedHat.yml
-  when: ansible_distribution_file_variety == 'RedHat'
+  when: ansible_distribution_file_variety == 'RedHat' and install_mysql
 
 - include_tasks: Debian.yml
-  when: ansible_distribution_file_variety == 'Debian'
+  when: ansible_distribution_file_variety == 'Debian' and install_mysql
+
+- name: Set Mysql root Password
+  community.mysql.mysql_user:
+    name: "{{ item.name }}"
+    host: "{{ item.host | default('localhost') }}"
+    password: "{{ item.password }}"
+    priv: "{{ item.priv | default('priv: *.*:USAGE') }}"
+    state: "{{ item.state | default('present') }}"
+    append_privs: "{{ item.append_privs | default('no') }}"
+    encrypted: "{{ item.encrypted | default('no') }}"
+  with_items: "{{ mysql_root_users }}"
+  no_log: "{{ mysql_no_log }}"
+  ignore_errors: true
+  when: install_mysql
+
+- name: Create `/root/.my.cnf`  with root password credentials
+  template:
+    src:  user.root.my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    mode: 0600
+    force: yes
+  when: install_mysql  
 
 - name: "Create mysql user"
   include_tasks: Users.yml
+  when: create_users_mysql or install_mysql
 
-- name: "Create database mysql"
+- name: "Create / Dump / Restore database mysql"
   include_tasks: Database.yml
+  when: create_database_dump_restore or install_mysql
+

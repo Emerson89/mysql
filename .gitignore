@@ -3,4 +3,6 @@
 inventory
 Vagrantfile
 .vagrant
-vars.yml
+vars*.yml
+user.sql
+playbook-local*

@@ -3,6 +3,7 @@
     login_host: "{{ item.login_host | default('localhost')}}"
     login_user: "{{ item.login_user | default('root')}}"
     login_password: "{{ item.login_password | default('')}}"
+    login_port: "{{ item.login_port | default('3306')}}"
     name: "{{ item.name | default('user01') }}"
     host: "{{ item.host | default('localhost') }}"
     password: "{{ item.password | default('yQE9ob2yqR4=')}}"
@@ -10,5 +11,7 @@
     state: "{{ item.state | default('present') }}"
     append_privs: "{{ item.append_privs | default('no') }}"
     encrypted: "{{ item.encrypted | default('no') }}"
+    plugin: "{{ item.plugin | default('') }}"
+    update_password: "{{ item.update_password | default('always') }}"
   with_items: "{{ mysql_users }}"
-  no_log: true
+  no_log: "{{ mysql_no_log }}"

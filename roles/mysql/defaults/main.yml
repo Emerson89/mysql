@@ -1,15 +1,66 @@
 mysql_root_username: root
-mysql_root_pass: Tg0z64OVddNzFwNA==
+install_mysql: false
+create_database_dump_restore: false
+create_users_mysql: false
+mysql_no_log: true
 
-# Databases.
+# Create Databases.
 mysql_databases: []
-#   - name: example
-#     collation: utf8_general_ci
-#     encoding: utf8
-#     replicate: 1
+  # - name: "db1"
+  #   encoding: utf8
+  #   collation: utf8_bin
+  # - name: 
+  #     - "db2"
+  #     - "db3"
+  #   encoding: utf8
+  #   collation: utf8_bin  
+  
 # Users.
 mysql_users: []
-#   - name: example
-#     host: 127.0.0.1
-#     password: secret
-#     priv: *.*:USAGE
+  # - name: "dbuser"
+  #   host: "localhost"
+  #   password: "password"
+  #   priv: "*.*:ALL,GRANT"
+  # - name: "dbuser2"
+  #   host: "%"
+  #   password: "password"
+  #   priv:
+  #     'db1.*': 'ALL,GRANT'
+  #     'db2.*': 'ALL,GRANT'  
+
+# Dump and Restore Databases.
+#mysql_databases: []
+  #  - name: "db"
+  #    target: dump.sql
+  #    state: dump
+  #  - name:
+  #     - db1
+  #     - db2
+  #    target: dump.sql
+  #    state: dump
+  #  - name: all
+  #    target: all.sql
+  #    state: dump
+  ### Restore
+  #  - name: "db"
+  #    target: dump.sql
+  #    state: import
+
+  ###  Access Remote
+
+  # install_mysql: false
+  # create_database_dump_restore: true
+  # create_users_mysql: true
+  
+  # - name: "db"
+  #   target: dump.sql
+  #   state: dump
+  #   login_host: 172.16.3.10
+  #   login_user: dbuser
+  #   login_password: password  
+  # - name: "db2"
+  #   target: dump.sql
+  #   state: import
+  #   login_host: 172.16.3.10
+  #   login_user: dbuser
+  #   login_password: password  

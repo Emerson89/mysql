@@ -7,5 +7,12 @@
     login_host: "{{ item.login_host | default('localhost')}}"
     login_user: "{{ item.login_user | default('root')}}"
     login_password: "{{ item.login_password | default('')}}"
+    force: "{{ item.force | default('false')}}"
+    ignore_tables: "{{ item.ignore_tables | default('[]')}}"
+    single_transaction: "{{ item.single_transaction | default('false')}}"
+    skip_lock_tables: "{{ item.skip_lock_tables | default('false')}}"
+    target: "{{ item.target | default('')}}"
+    unsafe_login_password: "{{ item.unsafe_login_password | default('false')}}"
+    dump_extra_args: "{{ item.dump_extra_args | default('')}}"
   with_items: "{{ mysql_databases }}"
-  no_log: true
+  no_log: "{{ mysql_no_log }}"
