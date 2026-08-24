@@ -14,6 +14,7 @@
 - Debian10
 - Rocky8
 - Centos8
+- rockylinux9
 
 ## Variables
 
@@ -25,6 +26,7 @@
 | install_mysql | Install mysql in VM | false
 | create_database_dump_restore | Enabled create database or dump or restore database | false
 | create_users_mysql | Enabled create users only remote use | false
+| mysql_version | Version mysql | 8.0
 
 ## Pass user root mysql
 
@@ -218,8 +220,16 @@ mysql_users:
 ## Example execute the playbook
 
 ```bash 
-ansible-playbook playbook.yml --extra-vars "@vars.yml"
+ansible-playbook playbook-local.yml --extra-vars "@vars.yml"
+```
+
+Debug
+
+```bash
+ansible mysql -i inventory -m setup |grep ansible
 ```
 
 ## Licença
 ![Badge](https://img.shields.io/badge/license-GPLv3-green)
+
+
